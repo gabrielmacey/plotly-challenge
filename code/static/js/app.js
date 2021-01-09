@@ -56,7 +56,7 @@ function graph(sampleData) {
     var linearScale = d3.scaleLinear()
       .domain([min, max])
       .range([0,1]);
-    var colors = iD.map(y => d3.interpolateRgbBasis(["magenta", "blue"])(linearScale(y)));
+    var colors = iD.map(y => d3.interpolateRgbBasis(["purple", "blue", "green", "brown"])(linearScale(y)));
     var trace2 = {
       x: iD,
       y: samplesV,
@@ -64,7 +64,8 @@ function graph(sampleData) {
       mode: 'markers',
       marker: {
         color: colors,
-        size: samplesV,
+        // This creates the bubble sizes
+        size: samplesV.map(x=>x*8),
         sizemode: 'area'
       }
     };
@@ -79,7 +80,7 @@ function graph(sampleData) {
         }
       },
     };
-    Plotly.newPlot('bubble',data2,bubbleLayout);
+    Plotly.newPlot('bubble', data2, bubbleLayout);
   });
 };
 
