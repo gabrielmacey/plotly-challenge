@@ -8,17 +8,14 @@ d3.json('samples.json').then((data)=>{
   })
 })
 
-//Create a dropdown event for the menu
-
-
 // Create a function that reads the plots
 function graph(sampleData) {
   d3.json('samples.json').then((data)=> {
     // Create the sample data for reference
     var samples = data.samples;
-    // Make the bar chart
     var numbers = samples.map(row=>row.id).indexOf(sampleData);
 
+    // Make the bar chart
     var topTen = samples.map(row=>row.sample_values);
     var topTen = topTen[numbers].slice(0,10).reverse();
 
@@ -36,8 +33,12 @@ function graph(sampleData) {
       orientation:'h'
     };
     var data1 = [trace1]
+    var layout = {
+      colorway : ['#182844']
+    };
 
-  Plotly.newPlot('bar', data1);
+
+  Plotly.newPlot('bar', data1, layout);
 
   // Use same data to make bubble
 
@@ -81,7 +82,10 @@ function graph(sampleData) {
       },
     };
     Plotly.newPlot('bubble', data2, bubbleLayout);
+
   });
 };
 
-graph("940");
+function optionChanged(newId){
+  graph(newId);
+}
