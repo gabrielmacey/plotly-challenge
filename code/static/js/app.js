@@ -1,7 +1,6 @@
 // Append to make id strings
 d3.json('samples.json').then((data)=>{
   var string = data.names;
-  console.log(data.metadata);
   var fixed = d3.selectAll('#selDataset');
   Object.entries(string).forEach(([i,j])=>{
       fixed.append('option').text(j);
@@ -81,11 +80,22 @@ function graph(sampleData) {
         }
       },
     };
-    Plotly.newPlot('bubble', data2, bubbleLayout);
+  Plotly.newPlot('bubble', data2, bubbleLayout);
 
+  d3.json('samples.json').then((data)=>{
+    var metadata = data.metadata;
+    console.log(metadata);
+    var panel = d3.select("#sample-metadata");
+    panel.html("");
+    Object.entries(metadata[numbers]).forEach(([key, value]) => {
+        panel.append("p").text(`${key}: ${value}`);
+      });
+    });
   });
 };
 
 function optionChanged(newId){
   graph(newId);
 }
+
+graph("940")
